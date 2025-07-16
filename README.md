@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # realword-app-leptos-axum
-A near realworld leptos web app with axum postgres backend - in preparation, will be added shortly!
+A near realworld leptos web app with axum postgres backend
 =======
 <picture>
     <source srcset="https://raw.githubusercontent.com/leptos-rs/leptos/main/docs/logos/Leptos_logo_Solid_White.svg" media="(prefers-color-scheme: dark)">
