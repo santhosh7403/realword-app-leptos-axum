@@ -8,10 +8,10 @@ A near realworld leptos web app with axum postgres backend
 
 This is another Leptos demo application that I worked on as part of my learning Rust/Leptos and carrying out experiments. This one is little more complex  compared to the previously shared one [ demo-tools-app-leptos-07-actix-tailwind ](https://github.com/santhosh7403/demo-tools-app-leptos-07-actix-tailwind). I hope this code may help anyone who is seriously considering Leptos framework in their next project and wants a hands-on or a more real-world working example.
 
-There also a sqlite version which has only few steps to run whereas postgres version (this one) has few more DB setup steps, though UI & function wise same. The sqlite version is [ here ](https://github.com/santhosh7403/realword-app-leptos-07-axum-sqlite)
+There also a sqlite version which has only few steps to run whereas postgres version (this one) has few more DB setup steps, though UI & function wise same. The sqlite version is [ here ](https://github.com/santhosh7403/realword-app-leptos-axum-sqlite)
 
 
-Before proceeding to clone, you may take a look on the [ screenshots here ](https://github.com/santhosh7403/realword-app-leptos-07-axum/blob/main/App_Screenshots.md), that will give a quick good insight into this app and you can decide.
+Before proceeding to clone, you may take a look on the [ screenshots here ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/App_Screenshots.md), that will give a quick good insight into this app and you can decide.
 
 
 
@@ -27,13 +27,13 @@ This app includes:<br/>
 
 To test it out, clone the repo and run.
 
-`git clone https://github.com/santhosh7403/realword-app-leptos-07-axum.git`
+`git clone https://github.com/santhosh7403/realword-app-leptos-axum.git`
 
-`cd realword-app-leptos-07-axum`
+`cd realword-app-leptos-axum`
 
 `source .env`  - export the environment variables to where cargo build going to run.
 
-Now we need setup a database and initialize it. Please refer the [ DB readme ](https://github.com/santhosh7403/realword-app-leptos-07-axum/blob/main/README_DATABASE.md) for this step since it has multiple ways and you choose which one is appropriate and easy for you.
+Now we need setup a database and initialize it. Please refer the [ DB readme ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/README_DATABASE.md) for this step since it has multiple ways and you choose which one is appropriate and easy for you.
 
 
 And the final build and run, however check the below rust toolchain or cargo-leptos are not installed.
