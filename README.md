@@ -1,4 +1,3 @@
-# realword-app-leptos-axum
 A near realworld leptos web app with axum postgres backend
 =======
 <picture>
@@ -62,4 +61,3 @@ Now you may run the build.
 Once application started, access application from you web browser [ localhost:3000 ](http://localhost:3000/)
 
 To showcase and test, some dummy data is populated already. User names 'user1' to 'user5' are available and password is same as username. In case if you want to remove this data, you may delete the 'basedata' files inside migrations folder before build and run.
->>>>>>> 7e5e55a (initial commit)
