@@ -36,12 +36,13 @@ To test it out, clone the repo and run.
 Now we need setup a database and initialize it. Please refer the [ DB readme ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/README_DATABASE.md) for this step since it has multiple ways and you choose which one is appropriate and easy for you.
 
 
-And the final build and run step, however, ensure rust toolchains and cargo-leptos are installed for that.
+And the final build and run step, however, ensure rust toolchains and cargo-leptos are installed for that.<br/>
+
 `cargo leptos watch`  or `cargo leptos serve`
 
 
 # Rust toolchain
-Above command expects rust toolchains and cargo-leptos are installed already, if you don't have `cargo-leptos` installed you can install it with
+Above command expects rust toolchains and cargo-leptos are installed already, if you don't have cargo-leptos installed, you can install it with<br/>
 
 `cargo install cargo-leptos --locked`
 
