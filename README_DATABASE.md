@@ -11,7 +11,7 @@ For example, currently the line in .env file is DATABASE_URL="postgres://postgre
 
 In that, 'postgres:mysecretpassword' string is the username & password used to connect and '@localhost' is the hostname of the DB server where postgres is running listening on default port 5432. In case of a different port, you need to explicitly add it like this '@localhost:5444' where 5444 is the port number . And the last parameter 'postgres' string is the database name.
 
-So, adjust the DATABASE_URL to reflect the correct parameters of your postgres instance.
+So, adjust the DATABASE_URL to reflect the correct parameters of your postgres instance. Then proceed to the 'Setup Database' below.
 
 
 # Postgres in a container.
@@ -37,7 +37,7 @@ The last 'postgres' string in command selects the image name from which this con
 if more details of the conatiner image required, please refer [ here ](https://hub.docker.com/_/postgres)
 
 
-If all goes well, container will be running as expected and you may verify like below
+If all goes well, container will be running as expected and you may verify like below and proceed with 'Setup Database' section.
 
 `podman ps -a`  - list all containers
 
@@ -46,20 +46,18 @@ If all goes well, container will be running as expected and you may verify like 
     3ce7ddc87857  docker.io/library/postgres:latest  postgres    2 weeks ago   Up 20 hours             0.0.0.0:5432->5432/tcp  my-postgres
 
 
-# Additional steps (optional)
+# Setup Database
 
-Though above steps are enough to run a DB to test this web app, adding sqlx-cli command-line utility will help to drop/create/reset the DB easily.
+Let us add the sqlx-cli command-line utility that will help us to drop/create/reset the DB in the DATABASE_URL string inside .env file. It is important to set DATABASE_URL ENV variable before running sqlx commands below as it operates on the value of it. It will be set by running  `source .env` command from the project root folder.
 
-To install sqlx-cli, run below command. However, it all expects you have rust toolchains installed, refer the Rust toolchain section in main readme to install.
+To install sqlx-cli, run below command. However, it all expects you have rust toolchains installed already,if not, refer the Rust toolchain section in main readme to install.
 
-`cargo install sqlx-cli`  - this installs utility
+`cargo install sqlx-cli`  - this installs sqlx utility
 
-Now move to the root folder i.e `cd realworld-app-leptos-07-axum`
+Now from the root folder you can run below commands to create a DB and run the initialize sql scripts inside the 'migrations' folder.
 
-Then you may do the operations like
+`cd realworld-app-leptos-axum`
 
-`sqlx database drop`  - DB drop
-`sqlx database create` - DB create
-`sqlx database reset` - DB reset
+`source .env`
 
-This assumes you have the correct DATABASE_URL environment variable set on the terminal you opened. It can be set by running  `source .env` command from the project root folder.
+`sqlx database setup` - DB create and run the migrations

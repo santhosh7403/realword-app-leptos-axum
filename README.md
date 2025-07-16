@@ -36,7 +36,7 @@ To test it out, clone the repo and run.
 Now we need setup a database and initialize it. Please refer the [ DB readme ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/README_DATABASE.md) for this step since it has multiple ways and you choose which one is appropriate and easy for you.
 
 
-And the final build and run, however check the below rust toolchain or cargo-leptos are not installed.
+And the final build and run step, however, ensure rust toolchains and cargo-leptos are installed for that.
 `cargo leptos watch`  or `cargo leptos serve`
 
 
@@ -45,19 +45,19 @@ Above command expects rust toolchains and cargo-leptos are installed already, if
 
 `cargo install cargo-leptos --locked`
 
-By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate` etc. If you run into any trouble, you may need to install one or more of these tools.
+By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate` etc. If you run into any trouble, you may need to install one or more of these tools. Please refer [ rustup here ](https://rustup.rs).
 
 1. `rustup toolchain install nightly --allow-downgrade` - make sure you have Rust nightly
 2. `rustup update` - update the rust toolchains to latest
 3. `rustup target add wasm32-unknown-unknown` - add the ability to compile Rust to WebAssembly
-4. `cargo install cargo-generate` - install `cargo-generate` binary (should be installed automatically in future)
+4. `cargo install cargo-generate` - install cargo-generate binary
 
 Now you may run the build.
 
-    `cargo leptos watch`  or `cargo leptos serve`
+  `cargo leptos watch`  or `cargo leptos serve`
 
 # Application access
 
 Once application started, access application from you web browser [ localhost:3000 ](http://localhost:3000/)
 
-To showcase and test, some dummy data is populated already. User names 'user1' to 'user5' are available and password is same as username. In case if you want to remove this data, you may delete the 'basedata' files inside migrations folder before build and run.
+To showcase the app and test, some sample users and data are populated. User names 'user1' to 'user5' are available and password is same as username. In case if you want to remove this data, you may delete the 'basedata' files inside migrations folder before build and run.
