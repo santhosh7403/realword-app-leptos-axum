@@ -7,9 +7,9 @@ This App requires a postgres database. It can be your existing postgres instance
 
 If you have an existing postgres instance, then create a new database reflecting the 'DATABASE_URL' value in the .env file (inside root folder).
 
-For example, currently the line in .env file is DATABASE_URL="postgres://postgres:mysecretpassword@localhost/postgres3".
+For example, currently the line in .env file is DATABASE_URL="postgres://postgres:mysecretpassword@localhost/postgres".
 
-In that, 'postgres:mysecretpassword' string is the username & password used to connect and '@localhost' is the hostname of the DB server where postgres is running listening on default port 5432. In case of a different port, you need to explicitly add it like this '@localhost:5444' where 5444 is the port number . And the last parameter 'postgres3' string is the database name. 
+In that, 'postgres:mysecretpassword' string is the username & password used to connect and '@localhost' is the hostname of the DB server where postgres is running listening on default port 5432. In case of a different port, you need to explicitly add it like this '@localhost:5444' where 5444 is the port number . And the last parameter 'postgres' string is the database name.
 
 So, adjust the DATABASE_URL to reflect the correct parameters of your postgres instance.
 
@@ -54,9 +54,9 @@ To install sqlx-cli, run below command. However, it all expects you have rust to
 
 `cargo install sqlx-cli`  - this installs utility
 
-Now move to the root folder i.e `cd realworld-app-leptos-07-axum` 
+Now move to the root folder i.e `cd realworld-app-leptos-07-axum`
 
-Then you may do the operations like 
+Then you may do the operations like
 
 `sqlx database drop`  - DB drop
 `sqlx database create` - DB create
