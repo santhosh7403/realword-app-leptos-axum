@@ -1,3 +1,4 @@
+use crate::routes::article_modal::FollowUser;
 use leptos::prelude::*;
 
 #[server(FollowAction, "/api")]
@@ -51,11 +52,17 @@ pub fn ButtonFollow(
     logged_user: crate::auth::UsernameSignal,
     author: ReadSignal<String>,
 ) -> impl IntoView {
-    let following_signal = use_context::<RwSignal<bool>>();
+    // let following_signal = use_context::<RwSignal<bool>>();
+    let following_signal = use_context::<RwSignal<FollowUser>>();
+
     let follow = ServerAction::<FollowAction>::new();
-    let follow_update = move |_| {
+    let follow_update = move || {
+        follow.dispatch(FollowAction {
+            other_user: author.get(),
+        });
+
         following_signal
-            .map(|fso| fso.update(|fs| *fs = !*fs))
+            .map(|fso| fso.update(|fs| fs.0 = !fs.0))
             .expect("following_signal read from context error")
     };
 
@@ -74,27 +81,25 @@ pub fn ButtonFollow(
 
     view! {
         <Show when=move || logged_user.get().unwrap_or_default() != author.get() fallback=|| ()>
-            <ActionForm action=follow>
-                <input type="hidden" name="other_user" value=move || author.get() />
+        <form>
                 <div class="rounded-md">
                     <button
-                        type="submit"
                         class="btn btn-sm btn-outline-secondary"
                         class=(
                             "text-yellow-500",
-                            move || !is_hovered.get() && following_signal.get().unwrap_or_default(),
+                            move || !is_hovered.get() && following_signal.get().unwrap_or(FollowUser(false)).0,
                         )
                         class=(
                             "text-yellow-400",
-                            move || is_hovered.get() && !following_signal.get().unwrap_or_default(),
+                            move || is_hovered.get() && !following_signal.get().unwrap_or(FollowUser(false)).0,
                         )
                         disabled=move||follow.pending().get()
-                        on:click=follow_update
+                        on:click=move|_|follow_update()
                         on:mouseenter=move |_| set_is_hovered(true)
                         on:mouseleave=move |_| set_is_hovered(false)
                     >
                         <Show
-                            when=move || following_signal.get().unwrap_or_default()
+                            when=move || following_signal.get().unwrap_or(FollowUser(false)).0
                             fallback=|| {
                                 view! {
                                     <i class="fa-solid fa-person-circle-plus w-4 h-4"></i>
@@ -117,7 +122,7 @@ pub fn ButtonFollow(
                         {move || author.get()}
                     </button>
                 </div>
-            </ActionForm>
+            </form>
         </Show>
     }
 }
@@ -175,6 +180,12 @@ pub fn ButtonFav(
 ) -> impl IntoView {
     let make_fav = ServerAction::<FavAction>::new();
 
+    let change_fav = move || {
+        make_fav.dispatch(FavAction {
+            slug: article.with(|x| x.slug.to_string()),
+        });
+    };
+
     let result_make_fav = make_fav.value();
     let fav_count = move || {
         if let Some(x) = result_make_fav.get() {
@@ -223,12 +234,7 @@ pub fn ButtonFav(
             }
         >
             <div class="flex items-center gap-2">
-                <ActionForm action=make_fav>
-                    <input
-                        type="hidden"
-                        name="slug"
-                        value=move || article.with(|x| x.slug.to_string())
-                    />
+                <form>
                     <button
                         class=(
                             [
@@ -246,6 +252,7 @@ pub fn ButtonFav(
                             username.get().unwrap() == article.with(|x| x.author.username.clone())
                             || make_fav.pending().get()
                         }
+                        on:click=move|_| change_fav()
                     >
 
                         <Show
@@ -273,7 +280,7 @@ pub fn ButtonFav(
                         " Favourites: "
                         {fav_count}
                     </span>
-                </ActionForm>
+                </form>
             </div>
         </Show>
     }

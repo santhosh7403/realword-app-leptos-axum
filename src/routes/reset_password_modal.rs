@@ -31,7 +31,7 @@ pub async fn reset_password_1(email: String) -> Result<String, ServerFnError> {
             passwd: env::var("MAILER_PASSWD").unwrap(),
             smtp_server: env::var("MAILER_SMTP_SERVER").unwrap(),
         });
-        let host = leptos_axum::extract::<axum::extract::Host>().await?.0;
+        let host = leptos_axum::extract::<axum_extra::extract::Host>().await?.0;
         let schema = if cfg!(debug_assertions) {
             "http"
         } else {
@@ -56,8 +56,9 @@ pub async fn reset_password_1(email: String) -> Result<String, ServerFnError> {
         // authenticate using the provided credentials.
         leptos::logging::log!("The email is {:?}", message);
 
-        // if smtp available and set in env, then uncomment below mail send part. Else use above log to provide us a reset link to test
-        // Incorrect smtp will cause the thread to panic after multiple attempts
+        // ********* UNCOMMENT IF NEEDED *********
+        // if smtp available, then uncomment below mail send part. Else use above logging to get a reset link to test
+        // Incorrect smtp may cause the thread to panic after multiple attempts
 
         // mail_send::SmtpClientBuilder::new(creds.smtp_server.as_str(), 587)
         //     .implicit_tls(false)
@@ -336,7 +337,7 @@ where
                                     <input
                                         node_ref=user_new_password
                                         name="password"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        class="input-field-common"
                                         type=move || {
                                             format!(
                                                 "{}",
@@ -369,7 +370,7 @@ where
                                     <input
                                         node_ref=user_confirm_password
                                         name="confirm_password"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        class="input-field-common"
                                         type=move || {
                                             format!(
                                                 "{}",
@@ -406,7 +407,7 @@ where
                                 Provide your linked email address with your user account.
                                 <input
                                     node_ref=user_email
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    class="input-field-common"
                                     id="email"
                                     name="email"
                                     type="text"
@@ -437,7 +438,7 @@ where
                     </div>
                     <div class="flex justify-between mb-5">
                         <button
-                            class="bg-blue-700 hover:bg-blue-800 px-5 py-3 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-700"
+                            class="btn-primary"
                             type="button"
                             prop:disabled=move || is_button_disabled
                             on:click=on_in_event
@@ -450,7 +451,7 @@ where
                                 format!(
                                     "{}",
                                     if reset_status.get().starts_with("Email sent.") {
-                                        "bg-blue-700 hover:bg-blue-800 px-5 py-3 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-700"
+                                        "btn-primary"
                                     } else {
                                         "bg-gray-300 hover:bg-gray-400 px-5 py-3 text-white rounded-lg"
                                     },

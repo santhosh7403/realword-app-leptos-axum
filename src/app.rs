@@ -6,7 +6,7 @@ use crate::routes::{
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, Body, MetaTags, Stylesheet, Title};
 use leptos_router::{
-    components::{Route, Router, Routes},
+    components::{Route, Router, Routes, RoutingProgress},
     path,
 };
 
@@ -98,6 +98,8 @@ pub fn App() -> impl IntoView {
         }
     };
 
+    let (is_routing, set_is_routing) = signal(false);
+
     view! {
         <Stylesheet id="leptos" href="/pkg/realworld-app-leptos-axum.css" />
         <Body {..} class=body_class />
@@ -105,7 +107,11 @@ pub fn App() -> impl IntoView {
         // sets the document title
         <Title text="Welcome to Leptos" />
 
-        <Router>
+        <Router set_is_routing>
+            // shows a progress bar while async data are loading
+            <div class="w-full h-[10px] bg-gray-800">
+                <RoutingProgress is_routing max_time=std::time::Duration::from_millis(500) />
+            </div>
             <nav class=move || {
                 format!(
                     "sticky top-0 z-10 shadow-md {}",
@@ -130,9 +136,12 @@ pub fn App() -> impl IntoView {
                         }
                     />
                     <Route path=path!("/login") view=move || view! { <LoginForm login /> } />
-                    <Route path=path!("/reset_password") view=move || view! { <ResetPassword logout/> } />
+                    <Route
+                        path=path!("/reset_password")
+                        view=move || view! { <ResetPassword logout /> }
+                    />
                     <Route path=path!("/signup") view=move || view! { <SignupForm signup /> } />
-                    <Route path=path!("/settings") view=move || view! { <Settings logout/> } />
+                    <Route path=path!("/settings") view=move || view! { <Settings logout /> } />
                     <Route path=path!("/editor") view=|| view! { <Editor /> } />
                     <Route path=path!("/editor/:slug") view=|| view! { <EditArticle /> } />
                     <Route
