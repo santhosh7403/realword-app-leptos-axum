@@ -62,6 +62,8 @@ Now you may run the build.
 Once application started, access application from you web browser [ localhost:3000 ](http://localhost:3000/)
 
 The application screen looks like this
+<img width="1809" height="1030" alt="image" src="https://github.com/user-attachments/assets/f4ffb361-8bbd-488f-b64b-0ed67a2bbc07" />
+
 
 
 More screenshots can be [ found here ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/App_Screenshots.md)
