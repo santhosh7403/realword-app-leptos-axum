@@ -66,7 +66,7 @@ The application screen looks like this
 
 
 
-More screenshots can be [ found here ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/App_Screenshots.md)
+More screenshots are [ available here ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/App_Screenshots.md)
 
 
 
