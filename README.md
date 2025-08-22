@@ -6,7 +6,7 @@ A near realworld leptos web app with axum postgres backend
 </picture>
 
 
-This is another Leptos demo application that I worked on as part of my learning Rust/Leptos and carrying out experiments. This one is little more complex  compared to the previously shared one [ demo-tools-app-leptos-07-actix-tailwind ](https://github.com/santhosh7403/demo-tools-app-leptos-07-actix-tailwind). I hope this code may help anyone who is seriously considering Leptos framework in their next project and wants a hands-on or a more real-world working example.
+This is another Leptos demo application that I worked on as part of my learning Rust/Leptos and carrying out experiments. This one is little more complex  compared to the previously shared one [ demo-tools-app-leptos-07-actix-tailwind ](https://github.com/santhosh7403/demo-tools-app-leptos-07-actix-tailwind). I hope this code may help anyone who is considering Leptos framework in their next project and wants a hands-on or a peek on more real-world working example.
 
 There also a sqlite version which has only few steps to run whereas postgres version (this one) has few more DB setup steps, though UI & function wise same. The sqlite version is [ here ](https://github.com/santhosh7403/realword-app-leptos-axum-sqlite)
 
@@ -20,6 +20,7 @@ This app includes:<br/>
         axum<br/>
         SSR<br/>
         postgres<br/>
+        full-text search<br/>
         Modal Windows<br/>
         uuid<br/>
         tailwindcss<br/>
@@ -62,7 +63,8 @@ Now you may run the build.
 Once application started, access application from you web browser [ localhost:3000 ](http://localhost:3000/)
 
 The application screen looks like this
-<img width="1809" height="1030" alt="image" src="https://github.com/user-attachments/assets/f4ffb361-8bbd-488f-b64b-0ed67a2bbc07" />
+<img width="1383" height="1032" alt="image" src="https://github.com/user-attachments/assets/941f7cb2-d796-4a44-9771-782dfa77e2ce" />
+<img width="1383" height="1032" alt="image" src="https://github.com/user-attachments/assets/2da70454-b7ff-41fe-9b0b-63547eab25bc" />
 
 
 
@@ -72,9 +74,14 @@ More screenshots are [ available here ](https://github.com/santhosh7403/realword
 
 To showcase the app and test, some sample users and data are populated. User names 'user1' to 'user5' are available and password is same as username. In case if you want to remove this data, you may delete the 'basedata' files inside migrations folder before build and run (essentially do the `sqlx database reset` step in the README_databse).
 
+# Full-text search (FTS)
+
+For more details on full-text search you may refer below documentations.
+1. A blog post on [ PostgreSQL full-text search ](https://iniakunhuda.medium.com/postgresql-full-text-search-a-powerful-alternative-to-elasticsearch-for-small-to-medium-d9524e001fe0)
+2. Postgresql [ documentation ](https://www.postgresql.org/docs/17/textsearch.html)
 
 # Inspiration and Thanks
 
 The base of this app is from [ here ](https://github.com/Bechma/realworld-leptos), though there may be other original versions some where else, not sure.
 
-I initially started this as leptos06 to 07 change in this app (though, above reference repo also seems updated now!) as my learning and got interest to try out more experiments. Overall user interface changed, some with modal windows, tailwindcss and fontawesome icons, re-wired pages, some functionality changes etc. Now looking to add the FTS (full text search) and so on.
+I initially started this as leptos06 to 07 change in this app (though, above reference repo also seems updated now!) as my learning and got interest to try out more experiments. Overall user interface changed, some with modal windows, tailwindcss and fontawesome icons, re-wired pages, some functionality changes etc.  Currently added postgresql supported FTS (full text search) feature to enable a wide search (see the screenshot above). Search results pagination changed to a new way to avoid results page reload.
