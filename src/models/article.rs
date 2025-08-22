@@ -206,7 +206,11 @@ WHERE
         sqlx::query!(
             "
     SELECT
-        a.*,
+        a.slug as slug,
+        a.title as title,
+        a.description as description,
+        a.body as body,
+        a.created_at as created_at,
         (SELECT string_agg(tag, ' ') FROM ArticleTags WHERE article = a.slug) as tag_list,
         (SELECT COUNT(*) FROM FavArticles WHERE article = a.slug) as fav_count,
         (SELECT COUNT(*) FROM comments WHERE article = a.slug) as comments_count,

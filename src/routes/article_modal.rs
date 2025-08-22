@@ -10,8 +10,8 @@ use reactive_stores::Store;
 
 #[derive(serde::Deserialize, serde::Serialize, Clone, Default)]
 pub struct ArticleResult {
-    pub(super) article: crate::models::Article,
-    pub(super) logged_user: Option<crate::models::User>,
+    pub article: crate::models::Article,
+    pub logged_user: Option<crate::models::User>,
 }
 
 #[derive(Clone)]
@@ -134,7 +134,7 @@ where
                     </div>
                 </div>
                 <div class="mb-5 px-1 py-1">
-                    <CommentSection username article=article_signal user=user_signal />
+                    <CommentSection username article=article_signal user_signal />
                 </div>
                     <BackToButton on_back_event is_top=false/>
             </div>
@@ -208,10 +208,10 @@ pub async fn delete_comment(id: i32) -> Result<(), ServerFnError> {
 }
 
 #[component]
-fn CommentSection(
+pub fn CommentSection(
     username: crate::auth::UsernameSignal,
     article: ArticleSignal,
-    user: RwSignal<Option<crate::models::User>>,
+    user_signal: RwSignal<Option<crate::models::User>>,
 ) -> impl IntoView {
     let comments_action = ServerAction::<PostCommentAction>::new();
     let result = comments_action.version();
@@ -263,7 +263,7 @@ fn CommentSection(
                         </textarea>
                     </div>
                     <div class="flex mb-5">
-                        <CurrentUserIcon user_signal=user />
+                        <CurrentUserIcon user_signal />
                         <div class="px-2">
                             <button
                                 class=move||format!("rounded px-1 py-1 text-sm font-medium text-white {}", if post_button_disable() {"bg-gray-300 cursor-not-allowed"}else{"bg-blue-700 hover:bg-blue-800"})

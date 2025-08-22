@@ -1,12 +1,12 @@
 use crate::components::navitems::NavItems;
 use crate::routes::{
     article_modal::*, editor_modal::*, home_main::*, login_modal::*, reset_password_modal::*,
-    settings_modal::*, signup_modal::*,
+    settings_modal::*, signup_modal::*, user_home::SearchAction,
 };
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, Body, MetaTags, Stylesheet, Title};
 use leptos_router::{
-    components::{Route, Router, Routes, RoutingProgress},
+    components::{Route, Router, Routes},
     path,
 };
 
@@ -43,6 +43,8 @@ pub struct GlobalState {
     back_url: String,
     is_profile: bool,
     home_url: String,
+    search_results_window: bool,
+    search_param: String,
 }
 
 impl Default for GlobalState {
@@ -51,6 +53,8 @@ impl Default for GlobalState {
             back_url: "/".to_string(),
             is_profile: false,
             home_url: "/".to_string(),
+            search_results_window: false,
+            search_param: String::new(),
         }
     }
 }
@@ -98,20 +102,22 @@ pub fn App() -> impl IntoView {
         }
     };
 
-    let (is_routing, set_is_routing) = signal(false);
+    let footer_class = move || {
+        if show_modal.get() {
+            "hidden"
+        } else {
+            "bg-gray-200 text-gray-600 text-center text-xs sticky bottom-0"
+        }
+    };
+
+    let run_search = ServerAction::<SearchAction>::new();
+    provide_context(run_search);
 
     view! {
         <Stylesheet id="leptos" href="/pkg/realworld-app-leptos-axum.css" />
         <Body {..} class=body_class />
-
-        // sets the document title
         <Title text="Welcome to Leptos" />
-
-        <Router set_is_routing>
-            // shows a progress bar while async data are loading
-            <div class="w-full h-[10px] bg-gray-800">
-                <RoutingProgress is_routing max_time=std::time::Duration::from_millis(500) />
-            </div>
+        <Router>
             <nav class=move || {
                 format!(
                     "sticky top-0 z-10 shadow-md {}",
@@ -131,10 +137,9 @@ pub fn App() -> impl IntoView {
                 <Routes fallback=move || "Route Not found.">
                     <Route
                         path=path!("/")
-                        view=move || {
-                            view! { <HomeMain username user_profile=false /> }
-                        }
+                        view=move || view! { <HomeMain username user_profile=false /> }
                     />
+                    <Route path=path!("article/:slug") view=move|| view! {<Article username />} />
                     <Route path=path!("/login") view=move || view! { <LoginForm login /> } />
                     <Route
                         path=path!("/reset_password")
@@ -145,16 +150,6 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("/editor") view=|| view! { <Editor /> } />
                     <Route path=path!("/editor/:slug") view=|| view! { <EditArticle /> } />
                     <Route
-                        path=path!("/article/:slug")
-                        view=move || {
-                            view! {
-                                {
-                                    view! { <Article username /> }
-                                }
-                            }
-                        }
-                    />
-                    <Route
                         path=path!("/profile/:user")
                         view=move || {
                             view! { <HomeMain username user_profile=true /> }
@@ -162,16 +157,21 @@ pub fn App() -> impl IntoView {
                     />
                 </Routes>
             </main>
-            <footer class=move || {
-                format!(
-                    "{}",
-                    if show_modal.get() {
-                        "hidden"
-                    } else {
-                        "bg-gray-200 text-gray-600 text-center text-xs sticky bottom-0"
-                    },
-                )
-            }>
+            <footer class=footer_class
+
+            // move || {
+
+            //     leptos::logging::log!("show_modal is {}", show_modal.get());
+            //     format!(
+            //         "{}",
+            //         if show_modal.get() {
+            //             "hidden"
+            //         } else {
+            //             ""
+            //         },
+            //     )
+            // }
+            >
 
                 <a href="/">"MyApp"</a>
                 <div class="">
