@@ -74,12 +74,12 @@ async fn get_tags() -> Result<Vec<String>, ServerFnError> {
                     T1.article = T2.slug
                 GROUP BY
                     T1.tag
-            	ORDER BY  
+            	ORDER BY
             		tag_count DESC
             	LIMIT 10
             ) AS combined_tags
 
-            UNION 
+            UNION
 
             SELECT
                 tag,
@@ -505,7 +505,7 @@ fn SearchView(
                 </div>
 
             </div>
-            <Show when=move || (show_article.get() && !hide_all.get()) fallback=|| ()>
+            <Show when=move || show_article.get() && !hide_all.get() fallback=|| ()>
                 <ArticleView slug=article_res.slug.clone() username />
             </Show>
         </div>
