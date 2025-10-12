@@ -6,12 +6,12 @@ A near realworld leptos web app with axum postgres backend
 </picture>
 
 
-This is another Leptos demo application that I worked on as part of my learning Rust/Leptos and carrying out experiments. This one is little more complex  compared to the previously shared one [ demo-tools-app-leptos-07-actix-tailwind ](https://github.com/santhosh7403/demo-tools-app-leptos-07-actix-tailwind). I hope this code may help anyone who is considering Leptos framework in their next project and wants a hands-on or a peek on more real-world working example.
+This is another Leptos demo application that I worked on as part of my learning Rust/Leptos and carrying out experiments. This one is little more complex  compared to the previously shared one [ demo-tools-app-leptos-07-actix-tailwind ](https://github.com/santhosh7403/demo-tools-app-leptos-07-actix-tailwind). I hope this code may help someone who is considering Leptos framework in their next project and wants a hands-on approach or a peek into a more real-world working example.
 
-There also a sqlite version which has only few steps to run whereas postgres version (this one) has few more DB setup steps, though UI & function wise same. The sqlite version is [ here ](https://github.com/santhosh7403/realword-app-leptos-axum-sqlite)
+There is also a sqlite version which has only few simple steps to run whereas postgres version (this one) require more DB setup steps, though UI & function wise is same. The sqlite version is available[ here ](https://github.com/santhosh7403/realword-app-leptos-axum-sqlite)
 
 
-Before proceeding to clone, you may take a look on the [ screenshots here ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/App_Screenshots.md), that will give a quick good insight into this app and you can decide.
+Before proceeding to clone, you may take a look at the [ screenshots here ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/App_Screenshots.md), that will give a quick good glance into this app and you can decide.
 
 
 
@@ -26,18 +26,20 @@ This app includes:<br/>
         tailwindcss<br/>
         fontawesome icons<br/>
 
+# Clone & Run App
+
 To test it out, clone the repo and run.
 
 `git clone https://github.com/santhosh7403/realword-app-leptos-axum.git`
 
 `cd realword-app-leptos-axum`
 
-`source .env`  - export the environment variables to where cargo build going to run.
+`source .env`  - export the environment variables to the terminal where cargo build going to run.
 
-Now we need setup a database and initialize it. Please refer the [ DB readme ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/README_DATABASE.md) for this step since it has multiple ways and you choose which one is appropriate and easy for you.
+Now, we need to setup a database and initialize it. Please refer the [ DB readme ](https://github.com/santhosh7403/realword-app-leptos-axum/blob/main/README_DATABASE.md) for this step since it has multiple ways and you may choose which one is appropriate and easy for you.
 
 
-And the final build and run step, however, ensure rust toolchains and cargo-leptos are installed for that.<br/>
+next is build and run step, however, ensure rust toolchains and cargo-leptos are installed for that.<br/>
 
 `cargo leptos watch`  or `cargo leptos serve`
 
@@ -72,7 +74,7 @@ More screenshots are [ available here ](https://github.com/santhosh7403/realword
 
 
 
-To showcase the app and test, some sample users and data are populated. User names 'user1' to 'user5' are available and password is same as username. In case if you want to remove this data, you may delete the 'basedata' files inside migrations folder before build and run (essentially do the `sqlx database reset` step in the README_databse).
+To showcase the app and test, some sample users and data are pre-populated. User names 'user1' to 'user5' are available and password is same as username. In case if you want to remove this data, you may delete the 'basedata' files inside migrations folder before build and run (essentially do the `sqlx database reset` step in the README_databse).
 
 # Full-text search (FTS)
 
