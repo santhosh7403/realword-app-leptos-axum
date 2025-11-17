@@ -1,63 +1,136 @@
 
-# Database steps
+# Database Setup: PostgreSQL
 
-This App requires a postgres database. It can be your existing postgres instance or you may run in a container which can be done in few steps as described below.
+This application requires a PostgreSQL database. You may use an existing PostgreSQL instance or set up a new one quickly using a container, as detailed in the steps below.
 
-# Existing postgres instance
+## Existing PostgreSQL Instance
 
-If you have an existing postgres instance, then create a new database reflecting the 'DATABASE_URL' value in the .env file (inside root folder).
+If you are using an existing PostgreSQL installation, you must ensure a database reflecting the configuration in the project's `.env` file is created.
 
-For example, currently the line in .env file is DATABASE_URL="postgres://postgres:mysecretpassword@localhost/postgres".
+For instance, if your `.env` contains:
 
-In that, 'postgres:mysecretpassword' string is the username & password used to connect and '@localhost' is the hostname of the DB server where postgres is running listening on default port 5432. In case of a different port, you need to explicitly add it like this '@localhost:5444' where 5444 is the port number . And the last parameter 'postgres' string is the database name.
+`DATABASE_URL="postgres://postgres:mysecretpassword@localhost/postgres"`
 
-So, adjust the DATABASE_URL to reflect the correct parameters of your postgres instance. Then proceed to the 'Setup Database' below.
+The parameters break down as follows:
 
+*    `postgres:mysecretpassword`: The username and password used for authentication.
 
-# Postgres in a container.
+*    `@localhost`: The hostname (or IP address) of the database server.
 
-It is easy pull a postgres container image and run a container using podman (a drop in replacement for docker) or docker.
+*    `/postgres`: The target database name.
 
+Note on Port: PostgreSQL defaults to port 5432. If your instance uses a different port (e.g., 5444), you must explicitly include it, like: @localhost:5444.
 
-`podman pull postgres:latest`  - pulls the latest postgres image from repo
-
-`podman images`  - lists the images available - verify we have image.
-
-    santhosh@fedora:~$ podman images
-    REPOSITORY                  TAG         IMAGE ID      CREATED        SIZE
-    docker.io/library/postgres  latest      fbd9a209d4e8  5 weeks ago    446 MB
+Action: Adjust the DATABASE_URL in your .env file to correctly reflect your PostgreSQL instance parameters, then proceed to the Database Setup section.
 
 
+## PostgreSQL in a Container
 
-`podman run -it --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres` - This command runs a container with name 'my-postgres' and sets an ENV variable POSTGRES_PASSWORD.
-The DB user name ENV variable not set, since it takes the default user as 'postgres' if it is not set. if you want it non-default user for some reason, you may add another -e POSTGRES_USER=newuser to the above command.
-The -p 5432:5432 sets the listening port in container and mapping it to the port of container running host, hence we can access it from host throgh this host port.
-The last 'postgres' string in command selects the image name from which this container is created.
-
-if more details of the conatiner image required, please refer [ here ](https://hub.docker.com/_/postgres)
+Running PostgreSQL in a container using Docker or Podman is the easiest method to quickly set up the required database instance.
 
 
-If all goes well, container will be running as expected and you may verify like below and proceed with 'Setup Database' section.
+### Pulling the Image
 
-`podman ps -a`  - list all containers
+Pull the latest PostgreSQL image:
 
-    santhosh@fedora:~$ podman ps -a
-    CONTAINER ID  IMAGE                              COMMAND     CREATED       STATUS                  PORTS                   NAMES
-    3ce7ddc87857  docker.io/library/postgres:latest  postgres    2 weeks ago   Up 20 hours             0.0.0.0:5432->5432/tcp  my-postgres
+```bash
+podman pull postgres:latest
+# OR
+docker pull postgres:latest
+```
+### Verify the image is available:
 
+```bash
+podman images
+# OR
+docker images
+```
+### Running the Container
 
-# Setup Database
+Run the container, setting the password and mapping the default port:
 
-Let us add the sqlx-cli command-line utility that will help us to drop/create/reset the DB in the DATABASE_URL string inside .env file. It is important to set DATABASE_URL ENV variable before running sqlx commands below as it operates on the value of it. It will be set by running  `source .env` command from the project root folder.
+```bash
+podman run -it --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 postgres
+```
+Command Breakdown:
 
-To install sqlx-cli, run below command. However, it all expects you have rust toolchains installed already,if not, refer the Rust toolchain section in main readme to install.
+*    `--name my-postgres`: Assigns a readable name to the container.
+
+*    `-e POSTGRES_PASSWORD=mysecretpassword`: Sets the environment variable for the database password.
+
+*    `-p 5432:5432`: Maps the container's listening port (5432) to the host machine's port (5432).
+
+*    `postgres`: Specifies the image to use.
+
+User Note: By default, the database username is set to `postgres`. If a non-default user is required, add `-e POSTGRES_USER=newuser` to the run command.
+
+For more details on configuring the PostgreSQL container image, please refer to the official [documentation here](https://hub.docker.com/_/postgres).
+
+### Verification
+Confirm the container is running successfully and proceed to the next section:
+
+```bash
+podman ps -a
+# OR
+docker ps -a
+```
+
+---
+
+# Database Setup
+
+Let's use the sqlx-cli command-line utility to help us easily drop, create, or reset the database specified by the `DATABASE_URL` in the `.env` file.
+
+It is critical to set the `DATABASE_URL` environment variable before running any sqlx commands, as they operate directly on its value. This is typically done by running the `source .env` command from the project root folder.
+
+To install sqlx-cli, run the command below. This assumes you already have the Rust toolchains installed; if not, please refer to the Rust toolchain section in the main [README](https://github.com/santhosh7403/realworld-app-leptos-axum/blob/main/README.md).
 
 `cargo install sqlx-cli`  - this installs sqlx utility
 
-Now from the root folder you can run below commands to create a DB and run the initialize sql scripts inside the 'migrations' folder.
+Now, from the project root folder, run the following commands to create the database and run the initialization SQL scripts located in the migrations folder.
 
-`cd realworld-app-leptos-axum`
+```
+cd realworld-app-leptos-axum
 
-`source .env`
+source .env
 
-`sqlx database setup` - DB create and run the migrations
+sqlx database setup
+# The command above creates the DB and runs the migrations.
+```
+
+## Other Useful Commands
+
+Here is a quick reference for other commands available with the sqlx utility:
+
+```
+santhosh@fedora:~/realworld-app-leptos-axum$ sqlx 
+Command-line utility for SQLx, the Rust SQL toolkit.
+
+Usage: sqlx [OPTIONS] <COMMAND>
+
+Commands:
+  database     Group of commands for creating and dropping your database
+  prepare      Generate query metadata to support offline compile-time verification
+  migrate      Group of commands for creating and running migrations
+  completions  Generate shell completions for the specified shell
+  help         Print this message or the help of the given subcommand(s)
+
+Options:
+      --no-dotenv  Do not automatically load `.env` files
+  -h, --help       Print help
+  -V, --version    Print version
+santhosh@fedora:~/realworld-app-leptos-axum$ sqlx database
+Group of commands for creating and dropping your database
+
+Usage: sqlx database <COMMAND>
+
+Commands:
+  create  Creates the database specified in your DATABASE_URL
+  drop    Drops the database specified in your DATABASE_URL
+  reset   Drops the database specified in your DATABASE_URL, re-creates it, and runs any pending migrations
+  setup   Creates the database specified in your DATABASE_URL and runs any pending migrations
+  help    Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help  Print help
+```
