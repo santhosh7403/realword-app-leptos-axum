@@ -139,7 +139,10 @@ pub fn App() -> impl IntoView {
                         path=path!("/")
                         view=move || view! { <HomeMain username user_profile=false /> }
                     />
-                    <Route path=path!("article/:slug") view=move|| view! {<Article username />} />
+                    <Route
+                        path=path!("article/:slug")
+                        view=move || view! { <Article username /> }
+                    />
                     <Route path=path!("/login") view=move || view! { <LoginForm login /> } />
                     <Route
                         path=path!("/reset_password")
@@ -157,21 +160,20 @@ pub fn App() -> impl IntoView {
                     />
                 </Routes>
             </main>
-            <footer class=footer_class
+            <footer class=footer_class>
 
-            // move || {
+                // move || {
 
-            //     leptos::logging::log!("show_modal is {}", show_modal.get());
-            //     format!(
-            //         "{}",
-            //         if show_modal.get() {
-            //             "hidden"
-            //         } else {
-            //             ""
-            //         },
-            //     )
-            // }
-            >
+                // leptos::logging::log!("show_modal is {}", show_modal.get());
+                // format!(
+                // "{}",
+                // if show_modal.get() {
+                // "hidden"
+                // } else {
+                // ""
+                // },
+                // )
+                // }
 
                 <a href="/">"MyApp"</a>
                 <div class="">
