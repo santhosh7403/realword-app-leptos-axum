@@ -57,6 +57,7 @@ ssr = [
     "dep:tower",
     "dep:tower-http",
     "dep:axum-extra",
+    "dep:headers"
 ]
 
 # Defines a size-optimized profile for the WASM bundle in release mode
