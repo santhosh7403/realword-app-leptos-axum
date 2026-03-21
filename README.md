@@ -85,8 +85,11 @@ cargo leptos serve
 Once the application has started successfully, access it via your web browser at [ localhost:3000 ](http://localhost:3000/)
 
 Sample application screens.
-<img width="1383" height="1032" alt="image" src="https://github.com/user-attachments/assets/941f7cb2-d796-4a44-9771-782dfa77e2ce" />
-<img width="1383" height="1032" alt="image" src="https://github.com/user-attachments/assets/2da70454-b7ff-41fe-9b0b-63547eab25bc" />
+<img width="1924" height="1033" alt="image" src="https://github.com/user-attachments/assets/2eb4d1ab-d80a-46a7-8cbd-768692b7e435" />
+<img width="1924" height="1033" alt="image" src="https://github.com/user-attachments/assets/e4c10d56-48ec-4432-96a4-6c330d27dd0f" />
+<img width="1924" height="1033" alt="image" src="https://github.com/user-attachments/assets/b74cd6d7-f21a-4ee8-bf6b-50794154a0ab" />
+
+
 
 
 
