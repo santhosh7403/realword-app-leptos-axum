@@ -16,6 +16,18 @@ pub struct User {
     email: String,
     bio: Option<String>,
     image: Option<String>,
+    #[serde(default = "default_per_page")]
+    per_page_amount: i32,
+    #[serde(default = "default_theme_mode")]
+    theme_mode: String,
+}
+
+fn default_per_page() -> i32 {
+    10
+}
+
+fn default_theme_mode() -> String {
+    "dark".to_string()
 }
 
 static EMAIL_REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
@@ -36,6 +48,16 @@ impl User {
     #[inline]
     pub fn image(&self) -> Option<String> {
         self.image.clone()
+    }
+
+    #[inline]
+    pub fn per_page_amount(&self) -> i32 {
+        self.per_page_amount
+    }
+
+    #[inline]
+    pub fn theme_mode(&self) -> String {
+        self.theme_mode.clone()
     }
 
     pub fn set_password(mut self, password: String) -> Result<Self, String> {
@@ -97,11 +119,21 @@ impl User {
         Ok(self)
     }
 
+    pub fn set_per_page_amount(mut self, amount: i32) -> Self {
+        self.per_page_amount = amount;
+        self
+    }
+
+    pub fn set_theme_mode(mut self, theme_mode: String) -> Self {
+        self.theme_mode = theme_mode;
+        self
+    }
+
     #[cfg(feature = "ssr")]
     pub async fn get(username: String) -> Result<Self, sqlx::Error> {
         sqlx::query_as!(
             Self,
-            "SELECT username, email, bio, image, NULL as password FROM users WHERE username=$1",
+            "SELECT username, email, bio, image, NULL as password, per_page_amount, theme_mode FROM users WHERE username=$1",
             username
         )
         .fetch_one(crate::database::get_db())
@@ -112,7 +144,7 @@ impl User {
     pub async fn get_email(email: String) -> Result<Self, sqlx::Error> {
         sqlx::query_as!(
             Self,
-            "SELECT username, email, bio, image, NULL as password FROM users WHERE email=$1",
+            "SELECT username, email, bio, image, NULL as password, per_page_amount, theme_mode FROM users WHERE email=$1",
             email
         )
         .fetch_one(crate::database::get_db())
@@ -122,10 +154,12 @@ impl User {
     #[cfg(feature = "ssr")]
     pub async fn insert(&self) -> Result<sqlx::postgres::PgQueryResult, sqlx::Error> {
         sqlx::query!(
-            "INSERT INTO Users(username, email, password) VALUES ($1, $2, crypt($3, gen_salt('bf')))",
+            "INSERT INTO Users(username, email, password, per_page_amount, theme_mode) VALUES ($1, $2, crypt($3, gen_salt('bf')), $4, $5)",
             self.username,
             self.email,
             self.password,
+            self.per_page_amount,
+            self.theme_mode,
         )
             .execute(crate::database::get_db())
             .await
@@ -147,6 +181,30 @@ WHERE username=$1",
             self.email,
             self.password.is_some(),
             self.password,
+        )
+        .execute(crate::database::get_db())
+        .await
+    }
+
+    #[cfg(feature = "ssr")]
+    pub async fn update_per_page_amount(
+        &self,
+    ) -> Result<sqlx::postgres::PgQueryResult, sqlx::Error> {
+        sqlx::query!(
+            "UPDATE Users SET per_page_amount=$2 WHERE username=$1",
+            self.username,
+            self.per_page_amount,
+        )
+        .execute(crate::database::get_db())
+        .await
+    }
+
+    #[cfg(feature = "ssr")]
+    pub async fn update_theme_mode(&self) -> Result<sqlx::postgres::PgQueryResult, sqlx::Error> {
+        sqlx::query!(
+            "UPDATE Users SET theme_mode=$2 WHERE username=$1",
+            self.username,
+            self.theme_mode,
         )
         .execute(crate::database::get_db())
         .await

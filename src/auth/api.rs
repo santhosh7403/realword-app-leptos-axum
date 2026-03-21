@@ -83,8 +83,8 @@ pub async fn logout_action() -> Result<(), ServerFnError> {
         axum::http::HeaderValue::from_str(crate::auth::REMOVE_COOKIE)
             .expect("header value couldn't be set"),
     );
-    // leptos_axum::redirect("/");
-    leptos_axum::redirect("/login");
+    leptos_axum::redirect("/");
+    // leptos_axum::redirect("/login");
     Ok(())
 }
 
@@ -98,4 +98,56 @@ pub async fn current_user() -> Result<crate::models::User, ServerFnError> {
         tracing::error!("problem while retrieving current_user: {err:?}");
         ServerFnError::ServerError("you must be logged in".into())
     })
+}
+
+#[server(UpdateThemeMode, "/api")]
+#[tracing::instrument]
+pub async fn update_theme_mode(theme: String) -> Result<(), ServerFnError> {
+    let Some(logged_user) = super::get_username() else {
+        return Err(ServerFnError::ServerError("you must be logged in".into()));
+    };
+
+    match crate::models::User::get(logged_user).await {
+        Ok(user) => {
+            if let Err(err) = user.set_theme_mode(theme).update_theme_mode().await {
+                tracing::error!("problem while updating theme_mode: {err:?}");
+                Err(ServerFnError::ServerError("failed to update theme".into()))
+            } else {
+                Ok(())
+            }
+        }
+        Err(err) => {
+            tracing::error!("problem while retrieving current_user: {err:?}");
+            Err(ServerFnError::ServerError("you must be logged in".into()))
+        }
+    }
+}
+
+#[server(UpdatePerPageAmount, "/api")]
+#[tracing::instrument]
+pub async fn update_per_page_amount(amount: u32) -> Result<(), ServerFnError> {
+    let Some(logged_user) = super::get_username() else {
+        return Err(ServerFnError::ServerError("you must be logged in".into()));
+    };
+
+    match crate::models::User::get(logged_user).await {
+        Ok(user) => {
+            if let Err(err) = user
+                .set_per_page_amount(amount as i32)
+                .update_per_page_amount()
+                .await
+            {
+                tracing::error!("problem while updating per_page_amount: {err:?}");
+                Err(ServerFnError::ServerError(
+                    "failed to update per page amount".into(),
+                ))
+            } else {
+                Ok(())
+            }
+        }
+        Err(err) => {
+            tracing::error!("problem while retrieving current_user: {err:?}");
+            Err(ServerFnError::ServerError("you must be logged in".into()))
+        }
+    }
 }
