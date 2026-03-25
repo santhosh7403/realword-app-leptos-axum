@@ -25,10 +25,10 @@ This application leverages the following core technologies and features:
 * Leptos
 * axum
 * Server-Side Rendering (SSR)
-* sqlite
-* fts5 (Full-Text Search)
+* Postgres
+* fts (Full-Text Search)
 * Modal Windows
-* argon2 (Password Encryption)
+* JWT
 * uuid
 * tailwindcss
 * fontawesome icons
@@ -65,9 +65,9 @@ cd realword-app-leptos-axum
 
 ### Database Initialization
 
-1. `source .env` - set the DATABASE_URL env variable
+1. `source .env` - to set the DATABASE_URL env variable
 
-2, Follow the steps in [ README_DATABASE.md ](https://github.com/santhosh7403/realworld-app-leptos-axum-sqlite/blob/main/README_DATABASE.md) to initialize the database schema and data.
+2, Follow the steps in [ README_DATABASE.md ](https://github.com/santhosh7403/realworld-app-leptos-axum/blob/main/README_DATABASE.md) to initialize the database schema and data.
 
 ### Run Application
 
@@ -105,7 +105,7 @@ The application is pre-populated with sample users and data for immediate testin
 
 2.   Password: The password is the same as the username (e.g., user1 has a password of user1).
 
-To remove this default data, delete the basedata files within the `./migrations` folder and follow the database setup steps outlined in the [README_DATABASE.md](https://github.com/santhosh7403/realworld-app-leptos-axum-sqlite/blob/main/README_DATABASE.md).
+To remove this default data, delete the base data files within the `./migrations` folder and follow the database setup steps outlined in the [README_DATABASE.md](https://github.com/santhosh7403/realworld-app-leptos-axum/blob/main/README_DATABASE.md).
 
 ---
 
@@ -114,6 +114,20 @@ To remove this default data, delete the basedata files within the `./migrations`
 The application features a robust full-text search capability powered by PostgreSQL Full Text Search, which indexes three key fields from the `articles` table. For developers interested in the implementation or experimenting with different search methodologies, comprehensive documentation is available in the PostgreSQL [documentation here. ](https://www.postgresql.org/docs/17/textsearch.html)
 
 Another blog post on [PostgreSQL Full Text Search](https://iniakunhuda.medium.com/postgresql-full-text-search-a-powerful-alternative-to-elasticsearch-for-small-to-medium-d9524e001fe0)
+
+
+## 🏗️ Other Variants
+
+If you are looking for this same application with different frameworks or databases, check out these versions:
+
+| Framework | Database | Auth Type | Repository |
+| :--- | :--- | :--- | :--- |
+| **Leptos** | PostgreSQL | JWT | *This Repository* |
+| **Leptos** | PostgreSQL | Session | [View Repo](https://github.com/santhosh7403/axum-session-auth-realworld-app-leptos-postgres) |
+| **Leptos** | SQLite | JWT | [View Repo](https://github.com/santhosh7403/realworld-app-leptos-axum-sqlite) |
+| **Dioxus** | SQLite | Session | [View Repo](https://github.com/santhosh7403/axum-session-auth-realworld-app-dioxus-sqlite) |
+| **Dioxus** | SQLite | JWT | [View Repo](https://github.com/santhosh7403/realworld-app-dioxus-sqlite) |
+
 
 
 ## 🙏 Inspiration and Acknowledgements
@@ -126,6 +140,8 @@ This particular version was initiated during the transition from Leptos 0.6 to 0
 
 *   Implementation of modal windows and re-wired page navigation.
 
-*   Integration of SQLite FTS5 for comprehensive full-text search capabilities.
+*   Integration of Postgres FTS for comprehensive full-text search capabilities.
 
 *   An updated, non-reloading pagination method for search results
+
+*   Dark mode styling and user prefernce persistence.
