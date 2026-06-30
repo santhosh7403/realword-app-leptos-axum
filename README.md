@@ -120,13 +120,17 @@ Another blog post on [PostgreSQL Full Text Search](https://iniakunhuda.medium.co
 
 If you are looking for this same application with different frameworks or databases, check out these versions:
 
-| Framework | Database | Auth Type | Repository |
-| :--- | :--- | :--- | :--- |
-| **Leptos** | PostgreSQL | JWT | *This Repository* |
-| **Leptos** | PostgreSQL | Session | [View Repo](https://github.com/santhosh7403/axum-session-auth-realworld-app-leptos-postgres) |
-| **Leptos** | SQLite | JWT | [View Repo](https://github.com/santhosh7403/realworld-app-leptos-axum-sqlite) |
-| **Dioxus** | SQLite | Session | [View Repo](https://github.com/santhosh7403/axum-session-auth-realworld-app-dioxus-sqlite) |
-| **Dioxus** | SQLite | JWT | [View Repo](https://github.com/santhosh7403/realworld-app-dioxus-sqlite) |
+
+| Framework | Database | Auth Type | Auth Crates | Special Feature | Repository |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Leptos** | PostgreSQL | JWT | jsonwebtoken | | **This Repo* |
+| **Leptos** | PostgreSQL | Session | axum_session, axum_session_auth | | [View Repo](https://github.com/santhosh7403/realworld-app-leptos-axum) |
+| **Dioxus** | SQLite | Session | axum_session, axum_session_auth | | [View Repo](https://github.com/santhosh7403/axum-session-auth-realworld-app-dioxus-sqlite) |
+| **Dioxus** | SQLite | Session | tower_sessions, axum_login | superadmin, fine grained authorization | [View Repo](https://github.com/santhosh7403/tower-sessions-axum-login-realworld-app-dioxus-sqlite) |
+| **Dioxus** | SQLite | PASETO | pasetors | superadmin, fine grained authorization | [View Repo](https://github.com/santhosh7403/paseto-auth-realworld-app-dioxus-sqlite) |
+| **Leptos** | SQLite | JWT | jsonwebtoken | | [View Repo](https://github.com/santhosh7403/realworld-app-leptos-axum-sqlite) |
+| **Dioxus** | SQLite | JWT | jsonwebtoken | | [View Repo](https://github.com/santhosh7403/realworld-app-dioxus-sqlite) |
+
 
 
 
@@ -144,4 +148,4 @@ This particular version was initiated during the transition from Leptos 0.6 to 0
 
 *   An updated, non-reloading pagination method for search results
 
-*   Dark mode styling and user prefernce persistence.
+*   Dark mode styling and user preference persistence.
